@@ -59,10 +59,10 @@ export const strip=(items,active)=>{const a=items.slice(0,5);while(a.length<5)a.
    - Luôn hiện 5 ô hình mũi tên chỉ chiều quy trình; tên ngắn trên ô, tên đầy đủ ở tiêu đề tài liệu bên dưới.
    - Bước ngoài 5 ô dồn về hai đầu thành chồng mỏng có số bước ẩn; vuốt dải để lướt (dừng đúng mép ô), chạm chồng để lùi/tiến 1 ô.
    - Vuốt chỉ để lướt, chạm ô mới mở bước; ô đang mở đưa vào giữa.
-   - Màu: đã khóa xanh lá có ✓, đang làm vàng, chưa làm xám, ô đang mở xanh dương nhạt sẫm hơn.
-   - Khóa bước xong tự mở bước kế tiếp.
-   steps: [{short,full,state:'done'|'run'|'todo'}] ; cur: chỉ số bước đang mở. */
-export const stepStrip=(steps,cur)=>`<div class="sstrip"><div class="edge l"><span></span></div><div class="sc">${steps.map((s,i)=>`<div class="ar ${s.state}${i===cur?' on':''}" data-i="${i}" role="button" tabindex="0" aria-label="Bước ${i+1} ${esc(s.full)}"><b>${s.state==='done'&&i!==cur?'✓ ':''}B${i+1}</b><span>${esc(s.short)}</span></div>`).join('')}</div><div class="edge r"><span></span></div></div>`;
+   - Trạng thái app tự tính (không duyệt, không khóa): done = đủ và đúng (xanh lá ✓), run = còn thiếu (vàng),
+     bad = vượt ngưỡng (đỏ nhạt !), todo = chưa nhập (xám); ô đang mở xanh dương nhạt sẫm hơn.
+   steps: [{short,full,state:'done'|'run'|'bad'|'todo'}] ; cur: chỉ số bước đang mở. */
+export const stepStrip=(steps,cur)=>`<div class="sstrip"><div class="edge l"><span></span></div><div class="sc">${steps.map((s,i)=>`<div class="ar ${s.state}${i===cur?' on':''}" data-i="${i}" role="button" tabindex="0" aria-label="Bước ${i+1} ${esc(s.full)}"><b>${i!==cur?(s.state==='done'?'✓ ':s.state==='bad'?'! ':''):''}B${i+1}</b><span>${esc(s.short)}</span></div>`).join('')}</div><div class="edge r"><span></span></div></div>`;
 export function wireStepStrip(root,n,cur,onPick){const sc=root.querySelector('.sc'),eL=root.querySelector('.edge.l'),eR=root.querySelector('.edge.r');
   const iw=()=>{const a=sc.querySelector('.ar');return a?a.getBoundingClientRect().width-4:1};
   const edges=()=>{const L=Math.max(0,Math.round(sc.scrollLeft/iw())),R=Math.max(0,n-L-5);eL.classList.toggle('no',!L);eL.firstChild.textContent=L||'';eR.classList.toggle('no',!R);eR.firstChild.textContent=R||''};

@@ -46,16 +46,25 @@ Khóa ngày 12/11/2026 theo chỉ đạo anh Lê Bắc. Áp dụng cho mọi ph�
 1. Luôn 5 ô bằng nhau; phím hòa vào dải; phím đang dùng sáng lên (khối nền nhạt sau biểu tượng, chữ đậm).
 
 ### 5. Tài liệu nhiều bước (QUY TẮC KHÓA)
+Vai trò: CBKT lập hồ sơ. App chỉ kiểm soát hồ sơ đủ và đúng, rồi xuất PDF. App không có bước duyệt, không khóa, không phân quyền; việc soát và ký làm trên bản giấy.
+
 1. Dải bước luôn hiện 5 ô hình mũi tên chỉ chiều quy trình. Trên ô ghi mã bước + tên ngắn (tối đa khoảng 9 ký tự); tên đầy đủ ở tiêu đề tài liệu bên dưới.
 2. Bước ngoài 5 ô dồn về hai đầu thành chồng mỏng, ghi số bước đang ẩn mỗi bên.
 3. Vuốt dải để lướt, dừng đúng mép ô; vuốt không đổi bước đang nhập. Chạm ô mới mở bước; ô đang mở được đưa vào giữa. Chạm chồng hai đầu để lùi/tiến 1 ô (dùng khi đeo găng, tay ướt).
 4. Chỉ vuốt trên dải bước, không vuốt trên phần nhập và biên bản.
-5. Màu: đã khóa xanh lá có ✓; đang làm vàng; chưa làm xám; ô đang mở xanh dương nhạt, sẫm hơn.
-6. Khóa bước xong tự mở bước kế tiếp và trượt dải cho bước đó ở giữa.
+5. Màu trạng thái do app tự tính từ số liệu, không ai bấm duyệt:
+   - xanh lá có ✓: đủ và đúng (đủ ô bắt buộc, không chỉ tiêu nào vượt ngưỡng);
+   - vàng: đang nhập, còn thiếu ô bắt buộc;
+   - đỏ nhạt có dấu !: có chỉ tiêu vượt ngưỡng hoặc mâu thuẫn;
+   - xám: chưa nhập;
+   - ô đang mở: xanh dương nhạt, sẫm hơn.
+6. Bước đủ và đúng thì app gợi ý chuyển sang bước kế tiếp; CBKT vẫn sửa được mọi bước bất cứ lúc nào.
 7. Bố cục mỗi bước: phần nhập ở trên, biên bản xem trước ngay bên dưới, cập nhật theo từng ký tự gõ; chạm ô nào thì dòng tương ứng trên biên bản tô vàng.
-8. Chỉ tiêu vượt ngưỡng hiện đỏ trên biên bản; kết luận tự chuyển "Không đạt".
-9. Số liệu cùng tính chất nhập một lần ở bước gốc, các bước sau tự điền (nhãn "từ Bx", tô xanh nhạt trên biên bản).
-10. Thao tác cuối bước: Xem thử PDF · Xuất PDF · Lưu · Khóa bước. Bước đã khóa: Mở khóa · Xem biên bản.
+8. Chỉ tiêu vượt ngưỡng hiện đỏ trên biên bản; kết luận tự chuyển "Không đạt". App không tự sửa số, không tự đánh "Đạt" cho mục chưa kiểm.
+9. Số liệu cùng tính chất nhập một lần ở bước gốc, các bước sau tự điền (nhãn "từ Bx", tô xanh nhạt trên biên bản); muốn sửa thì sửa ở bước gốc.
+10. Thao tác cuối bước: Xem thử PDF · Xuất PDF · Lưu. Không có nút Khóa, Duyệt, Mở khóa.
+11. Xuất PDF theo từng biên bản hoặc cả bộ hồ sơ cọc. Còn thiếu hoặc vượt ngưỡng thì vẫn cho xuất nhưng báo rõ thiếu gì, sai gì trước khi xuất; ô thiếu để trống trên bản in để ghi tay.
+12. Mỗi lần xuất PDF, app ghi vào hồ sơ: thời điểm, người lập, phạm vi (biên bản nào), tình trạng đủ/đúng lúc xuất — để đối chiếu với bản giấy đã ký.
 
 Mã dùng chung: `stepStrip()` và `wireStepStrip()` trong js/ui.js; kiểu `.sstrip` trong css/app.css.
 

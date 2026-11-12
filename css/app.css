@@ -138,4 +138,5 @@ html[data-tile] .mtile b{font-size:10.5px;line-height:1.2}
 .sstrip .ar{flex:none;width:calc((100% + 16px) / 5);scroll-snap-align:start;margin-right:-4px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 3px 0 9px;font-size:10.5px;letter-spacing:-.01em;line-height:1.15;text-align:center;cursor:pointer;user-select:none;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%,8px 50%)}
 .sstrip .ar b{font-weight:700}.sstrip .ar span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sstrip .ar.done{background:#E1F1E8;color:var(--g)}.sstrip .ar.run{background:#FFF0D6;color:var(--a)}.sstrip .ar.todo{background:#ECEFED;color:var(--mut)}
+.sstrip .ar.bad{background:#FBE3E0;color:var(--r)}
 .sstrip .ar.on{background:#C9DCF5;color:#0C447C}

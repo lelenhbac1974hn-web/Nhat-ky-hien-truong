@@ -127,3 +127,15 @@ a.sk:active .ind{background:#E9EEF5}
 #nav .shot{display:none}
 html[data-tile] .mtile{padding:4px 3px;gap:4px}html[data-tile] .mic{width:36px;height:36px;border-radius:11px}html[data-tile] .mic svg{width:20px;height:20px}
 html[data-tile] .mtile b{font-size:10.5px;line-height:1.2}
+
+/* ===== Khuôn dải bước – QUY TẮC ĐÃ KHÓA (xem stepStrip trong js/ui.js) ===== */
+.sstrip{display:flex;align-items:stretch;height:48px}
+.sstrip .edge{flex:none;width:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--mut);cursor:pointer;position:relative;user-select:none}
+.sstrip .edge span{position:relative;z-index:2}
+.sstrip .edge::before,.sstrip .edge::after{content:"";position:absolute;top:9px;bottom:9px;width:6px;border:1px solid var(--bd);border-radius:3px;background:var(--bg)}
+.sstrip .edge.l::before{left:2px}.sstrip .edge.l::after{left:6px}.sstrip .edge.r::before{right:2px}.sstrip .edge.r::after{right:6px}.sstrip .edge.no{visibility:hidden}
+.sstrip .sc{flex:1;min-width:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain}.sstrip .sc::-webkit-scrollbar{display:none}
+.sstrip .ar{flex:none;width:calc((100% + 16px) / 5);scroll-snap-align:start;margin-right:-4px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 3px 0 9px;font-size:10.5px;letter-spacing:-.01em;line-height:1.15;text-align:center;cursor:pointer;user-select:none;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%,8px 50%)}
+.sstrip .ar b{font-weight:700}.sstrip .ar span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sstrip .ar.done{background:#E1F1E8;color:var(--g)}.sstrip .ar.run{background:#FFF0D6;color:var(--a)}.sstrip .ar.todo{background:#ECEFED;color:var(--mut)}
+.sstrip .ar.on{background:#C9DCF5;color:#0C447C}

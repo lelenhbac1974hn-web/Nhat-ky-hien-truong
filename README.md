@@ -24,12 +24,40 @@ Nhật ký hiện trường V2.0
 ```
 
 ## Nguyên tắc giao diện
-1. Màn của 4 tab chính (Hôm nay, Hồ sơ, Kho ảnh, Dự án) chỉ là danh sách để chọn, không có ô nhập.
-2. Nhập dữ liệu chỉ ở trang nhập: đầu trang có nút quay lại và tiêu đề, cuối trang là thanh thao tác cố định (Hủy / Lưu).
-3. Menu chức năng: lưới 4 ô vuông một hàng; ô trắng bo góc, biểu tượng trong khối màu nhạt, tên tối đa 2 dòng. Màu khối theo phân hệ: xanh lá nghiệm thu, vàng nâu hàng hóa, xanh dương báo cáo, tím dữ liệu. Ô chưa làm: viền nét đứt, nhãn "Sắp có".
-   Dải phím (thanh dưới, dải tab hoặc dải bước của hồ sơ): luôn 5 ô bằng nhau, phím hòa vào dải, phím đang dùng sáng lên (khối nền nhạt sau biểu tượng, chữ đậm); có thể gắn chấm trạng thái (xanh lá xong, vàng đang làm, xám chưa làm). Dùng hàm strip() trong js/ui.js.
-4. Nút luôn có biểu tượng + chữ, nền trong suốt hòa vào nền trang, không khối đặc, không viền; chạm chỉ hiện lớp tô nhạt. Chữ navy là thao tác chính, chữ đỏ là xóa. Ô nhập cao 44 px, nhãn ở trên, gợi ý ở dưới.
-5. Thao tác xóa nằm trong mục "Vùng nguy hiểm" và luôn hỏi xác nhận.
+Khóa ngày 12/11/2026 theo chỉ đạo anh Lê Bắc. Áp dụng cho mọi phân hệ và mọi tài liệu làm sau (nghiệm thu cọc, bệ, thân trụ, dầm, mặt cầu, nhận hàng, báo cáo ngày, báo cáo ảnh).
+
+### 1. Màn và trang nhập
+1. Màn của 4 tab chính chỉ là danh sách hoặc menu để chọn, không có ô nhập.
+2. Nhập dữ liệu chỉ ở trang nhập: đầu trang có nút quay lại và tiêu đề; cuối trang có thanh thao tác cố định.
+3. Thao tác xóa nằm trong "Vùng nguy hiểm" và luôn hỏi xác nhận.
+
+### 2. Nút và ô nhập
+1. Nút luôn có biểu tượng + chữ; nền trong suốt hòa vào nền trang, không khối đặc, không viền; chạm chỉ hiện lớp tô nhạt.
+2. Màu chữ phân loại: navy là thao tác chính, mực đen là thao tác phụ, đỏ là xóa.
+3. Ô nhập cao 44 px, nhãn ở trên, gợi ý ở dưới.
+4. Thông báo nổi nền trắng có biểu tượng; ẩn khi mở hộp thoại.
+
+### 3. Menu chức năng
+1. Lưới 4 ô vuông một hàng; biểu tượng trong khối màu nhạt; tên tối đa 2 dòng.
+2. Màu khối theo phân hệ: xanh lá nghiệm thu, vàng nâu hàng hóa, xanh dương báo cáo, tím dữ liệu, navy thiết lập.
+3. Chức năng chưa làm: viền nét đứt, nhãn "Sắp có".
+
+### 4. Dải phím (thanh dưới, dải tab)
+1. Luôn 5 ô bằng nhau; phím hòa vào dải; phím đang dùng sáng lên (khối nền nhạt sau biểu tượng, chữ đậm).
+
+### 5. Tài liệu nhiều bước (QUY TẮC KHÓA)
+1. Dải bước luôn hiện 5 ô hình mũi tên chỉ chiều quy trình. Trên ô ghi mã bước + tên ngắn (tối đa khoảng 9 ký tự); tên đầy đủ ở tiêu đề tài liệu bên dưới.
+2. Bước ngoài 5 ô dồn về hai đầu thành chồng mỏng, ghi số bước đang ẩn mỗi bên.
+3. Vuốt dải để lướt, dừng đúng mép ô; vuốt không đổi bước đang nhập. Chạm ô mới mở bước; ô đang mở được đưa vào giữa. Chạm chồng hai đầu để lùi/tiến 1 ô (dùng khi đeo găng, tay ướt).
+4. Chỉ vuốt trên dải bước, không vuốt trên phần nhập và biên bản.
+5. Màu: đã khóa xanh lá có ✓; đang làm vàng; chưa làm xám; ô đang mở xanh dương nhạt, sẫm hơn.
+6. Khóa bước xong tự mở bước kế tiếp và trượt dải cho bước đó ở giữa.
+7. Bố cục mỗi bước: phần nhập ở trên, biên bản xem trước ngay bên dưới, cập nhật theo từng ký tự gõ; chạm ô nào thì dòng tương ứng trên biên bản tô vàng.
+8. Chỉ tiêu vượt ngưỡng hiện đỏ trên biên bản; kết luận tự chuyển "Không đạt".
+9. Số liệu cùng tính chất nhập một lần ở bước gốc, các bước sau tự điền (nhãn "từ Bx", tô xanh nhạt trên biên bản).
+10. Thao tác cuối bước: Xem thử PDF · Xuất PDF · Lưu · Khóa bước. Bước đã khóa: Mở khóa · Xem biên bản.
+
+Mã dùng chung: `stepStrip()` và `wireStepStrip()` trong js/ui.js; kiểu `.sstrip` trong css/app.css.
 
 ## Sơ đồ lưu trữ
 Một kho duy nhất trong trình duyệt: IndexedDB `anphu_nkht`. Không dùng localStorage.

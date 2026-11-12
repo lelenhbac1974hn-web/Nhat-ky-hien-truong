@@ -16,7 +16,7 @@ async def main():
     t=await pg.inner_text('#view');ok('2. Tạo dự án, về trang Việc hôm nay','Việc hôm nay' in t and 'Hòn Khoai' in t and 'Đất Mũi' in t,t[:200])
     await pg.click('#nav a[href="#photos"]');await pg.wait_for_timeout(300);await pg.set_input_files('#pFile',[H+'/anh1.jpg',H+'/anh2.jpg']);await pg.wait_for_function("document.querySelectorAll('.ph').length===2",timeout=20000)
     ok('3. Nhập 2 ảnh từ máy vào Kho ảnh',True)
-    await pg.click('#nav a.shot');await pg.wait_for_function("document.querySelector('#cv')&&document.querySelector('#cv').videoWidth>0",timeout=15000);await pg.click('#cShot');await pg.wait_for_function("document.querySelector('#cN').textContent==='1 ảnh'",timeout=15000)
+    await pg.click('#nav a[href="#camera"]');await pg.wait_for_function("document.querySelector('#cv')&&document.querySelector('#cv').videoWidth>0",timeout=15000);await pg.click('#cShot');await pg.wait_for_function("document.querySelector('#cN').textContent==='1 ảnh'",timeout=15000)
     info=await pg.inner_text('#cinfo');await pg.click('.cam-x');await pg.wait_for_function("document.querySelectorAll('.ph').length===3",timeout=10000)
     ok('4. Chụp bằng camera trong app, ảnh vào kho',True);ok('5. Camera hiện ngày giờ, địa danh, GPS','Đất Mũi' in info and '8.62' in info,info)
     await pg.locator('.ph').first.click();await pg.wait_for_selector('#pdEdit');d=await pg.inner_text('.sheet')

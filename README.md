@@ -26,7 +26,8 @@ Nhật ký hiện trường V2.0
 ## Nguyên tắc giao diện
 1. Màn của 4 tab chính (Hôm nay, Hồ sơ, Kho ảnh, Dự án) chỉ là danh sách để chọn, không có ô nhập.
 2. Nhập dữ liệu chỉ ở trang nhập: đầu trang có nút quay lại và tiêu đề, cuối trang là thanh thao tác cố định (Hủy / Lưu).
-3. Menu dạng lưới 3 ô: ô trắng bo góc, biểu tượng trong khối màu nhạt 56 px, chữ bên dưới (theo menu app cũ). Màu khối theo phân hệ: xanh lá nghiệm thu, vàng nâu hàng hóa, xanh dương báo cáo, tím dữ liệu.
+3. Menu chức năng: lưới 4 ô vuông một hàng; ô trắng bo góc, biểu tượng trong khối màu nhạt, tên tối đa 2 dòng. Màu khối theo phân hệ: xanh lá nghiệm thu, vàng nâu hàng hóa, xanh dương báo cáo, tím dữ liệu. Ô chưa làm: viền nét đứt, nhãn "Sắp có".
+   Dải phím (thanh dưới, dải tab hoặc dải bước của hồ sơ): luôn 5 ô bằng nhau, phím hòa vào dải, phím đang dùng sáng lên (khối nền nhạt sau biểu tượng, chữ đậm); có thể gắn chấm trạng thái (xanh lá xong, vàng đang làm, xám chưa làm). Dùng hàm strip() trong js/ui.js.
 4. Nút luôn có biểu tượng + chữ, nền trong suốt hòa vào nền trang, không khối đặc, không viền; chạm chỉ hiện lớp tô nhạt. Chữ navy là thao tác chính, chữ đỏ là xóa. Ô nhập cao 44 px, nhãn ở trên, gợi ý ở dưới.
 5. Thao tác xóa nằm trong mục "Vùng nguy hiểm" và luôn hỏi xác nhận.
 

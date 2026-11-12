@@ -16,7 +16,7 @@ export async function today(V){const d=new Date();
   V.innerHTML=top(`${WD[d.getDay()]} ${p2(d.getDate())}/${p2(d.getMonth()+1)} · ${S.project.name}`,'Việc hôm nay',`<a class="lnk" href="#project-info">${esc(place)} · <span id="gpsLine">${esc(gpsText(S.gps))}</span></a>`)+`<div class="body">
    <div class="sec">Đang làm dở</div>${drafts.length?drafts.slice(0,6).map(taskRow).join(''):'<p class="mut">Không có hồ sơ nào đang làm dở.</p>'}
    ${hasDaily?'':`<div class="sec">Cần lập</div><div class="task">${rowIc('cal','b')}<div><span class="tag b">Báo cáo ngày</span><b>Báo cáo ${p2(d.getDate())}/${p2(d.getMonth()+1)}</b><span>Chưa lập</span></div></div>`}
-   <div class="sec">Lập mới</div>${menuGrid([{label:'Nghiệm thu cọc',sub:'Khối 2',ic:'pile',tone:'g',off:1},{label:'Nghiệm thu công việc khác',sub:'Khối 2',ic:'work',tone:'g',off:1},{label:'Nhận hàng',sub:'Khối 3',ic:'truck',tone:'a',off:1},{label:'Báo cáo ngày',sub:'Khối 4',ic:'cal',tone:'b',off:1},{label:'Báo cáo ảnh',sub:'Khối 5',ic:'album',tone:'b',off:1}])}</div>`;
+   <div class="sec">Lập mới</div>${menuGrid([{label:'Nghiệm thu cọc',sub:'Khối 2',ic:'pile',tone:'g',off:1},{label:'Công việc khác',sub:'Khối 2',ic:'work',tone:'g',off:1},{label:'Nhận hàng',sub:'Khối 3',ic:'truck',tone:'a',off:1},{label:'Báo cáo ngày',sub:'Khối 4',ic:'cal',tone:'b',off:1},{label:'Báo cáo ảnh',sub:'Khối 5',ic:'album',tone:'b',off:1}])}</div>`;
   const g=()=>{const e=$('#gpsLine');if(e)e.textContent=gpsText(S.gps)};addEventListener('ap-gps',g,{once:true})}
 const KIND_IC={coc:'pile',khac:'work',hang:'truck',ngay:'cal',anh:'album'};
 const taskRow=r=>{const[k,c]=KIND[r.kind]||['Hồ sơ','n'];return`<a class="task" href="#records">${rowIc(KIND_IC[r.kind]||'doc',c)}<div><span class="tag ${c}">${k}</span><b>${esc(r.title||'Chưa đặt tên')}</b><span>${esc(r.note||'Nháp')} · ${fDate(r.updatedAt)}</span></div></a>`};
@@ -75,11 +75,11 @@ export async function camera(V,ctx={}){if(!S.project){V.innerHTML=needProject();
 /* ---------- Dự án: chỉ là danh sách; mỗi mục mở trang nhập riêng ---------- */
 const slugName=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/gi,'d').replace(/[^A-Za-z0-9]+/g,'-');
 export async function project(V){
-  if(!S.project){V.innerHTML=top('Thiết lập lần đầu','Chưa có dự án')+`<div class="body">${menuGrid([{href:'#project-new',label:'Tạo dự án mới',ic:'plus',tone:'n'},{href:'#backup',label:'Khôi phục từ gói sao lưu',ic:'restore',tone:'p'}])}</div>`;return}
+  if(!S.project){V.innerHTML=top('Thiết lập lần đầu','Chưa có dự án')+`<div class="body">${menuGrid([{href:'#project-new',label:'Tạo dự án mới',ic:'plus',tone:'n'},{href:'#backup',label:'Khôi phục',ic:'restore',tone:'p'}])}</div>`;return}
   const p=S.project,last=await db.get('meta','lastBackupAt');
   V.innerHTML=top('Dự án đang dùng',p.name)+`<div class="body">
-   <div class="sec">Thiết lập</div>${menuGrid([{href:'#project-info',label:'Thông tin dự án',sub:p.place||'',ic:'info',tone:'n'},{href:'#project-me',label:'Người lập, đơn vị',sub:S.settings.reporter||'Chưa ghi',ic:'user',tone:'n'},{href:'#backup',label:'Sao lưu, khôi phục',sub:last?'Gần nhất '+fDate(last):'Chưa sao lưu',ic:'save',tone:'p'}])}
-   <div class="sec">Dữ liệu dự án</div>${menuGrid([['Cấu kiện nghiệm thu','layers','g'],['Quy trình nghiệm thu','flow','g'],['BOQ, nhân công, thiết bị','table','b'],['Vật tư, vật liệu','box','a'],['Hợp đồng mua hàng','contract','a']].map(([t,i,c])=>({label:t,sub:'Khối sau',ic:i,tone:c,off:1})))}
+   <div class="sec">Thiết lập</div>${menuGrid([{href:'#project-info',label:'Thông tin dự án',sub:p.place||'',ic:'info',tone:'n'},{href:'#project-me',label:'Người lập',sub:S.settings.reporter||'Chưa ghi',ic:'user',tone:'n'},{href:'#backup',label:'Sao lưu',sub:last?'Gần nhất '+fDate(last):'Chưa sao lưu',ic:'save',tone:'p'}])}
+   <div class="sec">Dữ liệu dự án</div>${menuGrid([['Cấu kiện','layers','g'],['Quy trình nghiệm thu','flow','g'],['BOQ, nguồn lực','table','b'],['Vật tư','box','a'],['Hợp đồng','contract','a']].map(([t,i,c])=>({label:t,sub:'Khối sau',ic:i,tone:c,off:1})))}
    <p class="mut center">Nhật ký hiện trường An Phú · phiên bản ${esc(window.AP_VERSION)}</p></div>`}
 export function projectNew(V){
   subPage(V,{back:'#project',title:'Tạo dự án',body:`<div class="form">${field('Tên dự án','fName','',{ph:'VD: Đường ra đảo Hòn Khoai'})}${field('Gói thầu','fPkg')}${field('Địa danh công trường','fPlace','',{ph:'VD: Đất Mũi, Cà Mau',hint:'In lên ảnh và hồ sơ'})}${field('Người lập hồ sơ','fRep',S.settings.reporter)}</div>`,

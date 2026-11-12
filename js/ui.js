@@ -47,7 +47,13 @@ export function subPage(V,{back,title,sub='',body,actions=''}){document.body.cla
 export const field=(label,id,value='',o={})=>`<label class="fld">${esc(label)}${o.area?`<textarea id="${id}" ${o.ph?`placeholder="${esc(o.ph)}"`:''}>${esc(value)}</textarea>`:`<input id="${id}" value="${esc(value)}" ${o.ph?`placeholder="${esc(o.ph)}"`:''} ${o.type?`type="${o.type}"`:''} autocomplete="off">`}${o.hint?`<small>${esc(o.hint)}</small>`:''}</label>`;
 /* Menu dạng lưới ô (theo kiểu menu app cũ của anh Bắc): ô trắng, biểu tượng trong khối màu nhạt, chữ dưới.
    it: {href,label,sub,ic,tone:'g'|'a'|'b'|'p'|'n',off} */
-export const menuGrid=items=>`<div class="mgrid">${items.map(it=>{const inner=`<span class="mic t-${it.tone||'n'}">${icon(it.ic||'doc',26)}</span><b>${esc(it.label)}</b>${it.off||it.sub?`<small>${esc(it.off?'Sắp có':it.sub)}</small>`:''}`;
+export const menuGrid=items=>`<div class="mgrid">${items.map(it=>{const inner=`${it.off?'<em class="soon">Sắp có</em>':''}<span class="mic t-${it.tone||'n'}">${icon(it.ic||'doc',26)}</span><b>${esc(it.label)}</b>`;
   return it.off?`<div class="mtile off" aria-disabled="true">${inner}</div>`:`<a class="mtile" href="${it.href}">${inner}</a>`}).join('')}</div>`;
+/* Dải phím (thanh dưới, dải tab đầu trang, dải bước của hồ sơ): luôn đủ 5 ô bằng nhau, phím hòa vào dải,
+   phím đang dùng sáng lên (khối nền nhạt sau biểu tượng + chữ đậm). it: {key,href,ic,label,accent,off,dot} */
+export const strip=(items,active)=>{const a=items.slice(0,5);while(a.length<5)a.push(null);
+  return a.map(it=>{if(!it)return'<span class="sk"></span>';const on=it.key===active;
+    const inner=`<span class="ind${it.accent?' acc':''}">${icon(it.ic,22)}${it.dot?`<i class="dot ${it.dot}"></i>`:''}</span><span class="lb">${esc(it.label)}</span>`;
+    return it.off?`<span class="sk off">${inner}</span>`:`<a class="sk${on?' on':''}" href="${it.href}"${on?' aria-current="page"':''}>${inner}</a>`}).join('')};
 export const rowIc=(ic,tone='n')=>ic?`<span class="ric t-${tone}">${icon(ic,18)}</span>`:'';
 export const menuRow=(href,label,right='',o={})=>o.off?`<div class="row off">${rowIc(o.ic,o.tone)}<b>${esc(label)}</b><span>${esc(right)}</span></div>`:`<a class="row" href="${href}">${rowIc(o.ic,o.tone)}<b>${esc(label)}</b><span>${esc(right)}</span><span class="chev" aria-hidden="true">›</span></a>`;

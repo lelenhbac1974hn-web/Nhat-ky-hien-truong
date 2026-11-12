@@ -38,3 +38,24 @@ body.full #nav{display:none}body.full #view{max-width:none;padding:0}
 .cam-msg{position:absolute;left:24px;right:24px;top:36%;background:#16202Aee;padding:14px;border-radius:10px;font-size:14px;text-align:center}
 .cam-dock{position:absolute;left:0;right:0;bottom:0;height:130px;background:var(--card);color:var(--ink);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;justify-items:center;padding:0 16px calc(env(safe-area-inset-bottom,0px))}
 .shutter{width:76px;height:76px;border-radius:50%;border:5px solid var(--pri);background:var(--card);cursor:pointer}.shutter:active{transform:scale(.94)}
+
+/* ===== Nguyên tắc giao diện V2.0 =====
+   1. Màn của 4 tab chính chỉ là danh sách để chọn; không có ô nhập.
+   2. Nhập dữ liệu chỉ ở trang nhập: đầu trang có nút quay lại + tiêu đề, cuối trang là thanh thao tác cố định (Lưu / Hủy).
+   3. Nút và ô nhập một kiểu cho toàn ứng dụng (dưới đây). */
+:root{--rad:10px;--bd:#D3D9D6}
+.btn{min-height:44px;border-radius:var(--rad);font-size:15px;font-weight:600;padding:0 18px;transition:background .12s}
+.btn.o{border:1px solid var(--bd);font-weight:600}.btn.o:hover{background:#F1F3F2}.btn:not(.o):not(.danger-o):hover{background:#0F2C55}
+.btn.sm{min-height:36px;padding:0 12px;font-size:14px;border-radius:8px}
+.fld{gap:6px;font-size:13px;font-weight:600;color:var(--ink)}.fld input,.fld select,.fld textarea{height:44px;border:1px solid var(--bd);border-radius:var(--rad);padding:0 12px;font-size:16px;font-weight:400;background:var(--card);width:100%}
+.fld textarea{height:auto;min-height:88px;padding:10px 12px;resize:vertical}.fld small{font-weight:400;color:var(--mut);font-size:12px}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px #173A6B22}
+.form{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 1px 0 var(--line);display:flex;flex-direction:column;gap:14px}
+a.row{text-decoration:none;color:var(--ink)}.row .chev{color:#9AA4A0;font-size:20px;line-height:1}.row.off b{color:var(--mut)}
+.grp .row:last-child{border-bottom:0}
+.hdr{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:6px;padding:calc(8px + env(safe-area-inset-top,0px)) 8px 8px;background:var(--bg);border-bottom:1px solid var(--line)}
+.hdr a{width:44px;height:44px;display:grid;place-items:center;color:var(--ink);border-radius:10px}.hdr b{display:block;font-size:17px}.hdr small{display:block;font-size:13px;color:var(--mut);font-weight:600}
+.actbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.actbar>div{max-width:528px;margin:0 auto;display:flex;gap:10px}.actbar .btn{flex:1}.actbar .btn:not(.o){flex:1.6}
+body.sub #nav{display:none}body.sub #view{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.list-actions{display:flex;gap:8px;align-items:center}

@@ -27,3 +27,9 @@ export async function saveFile(name,blob){
   const f=new File([blob],name,{type:blob.type||'application/octet-stream'});
   try{if(navigator.canShare&&navigator.canShare({files:[f]})&&/Android|iPhone|iPad/.test(navigator.userAgent)){await navigator.share({files:[f],title:name});return true}}catch(e){if(e&&e.name==='AbortError')return false}
   const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000);toast('Đã lưu '+name);return true}
+
+/* ----- Khung trang nhập: đầu trang có quay lại, thân là biểu mẫu, chân là thanh thao tác ----- */
+export function subPage(V,{back,title,sub='',body,actions=''}){document.body.classList.add('sub');
+  V.innerHTML=`<div class="hdr"><a href="${back}" aria-label="Quay lại">${icon('back')}</a><div><b>${esc(title)}</b>${sub?`<small>${esc(sub)}</small>`:''}</div></div><div class="body" style="padding-top:14px">${body}</div>${actions?`<div class="actbar"><div>${actions}</div></div>`:''}`}
+export const field=(label,id,value='',o={})=>`<label class="fld">${esc(label)}${o.area?`<textarea id="${id}" ${o.ph?`placeholder="${esc(o.ph)}"`:''}>${esc(value)}</textarea>`:`<input id="${id}" value="${esc(value)}" ${o.ph?`placeholder="${esc(o.ph)}"`:''} ${o.type?`type="${o.type}"`:''} autocomplete="off">`}${o.hint?`<small>${esc(o.hint)}</small>`:''}</label>`;
+export const menuRow=(href,label,right='',o={})=>o.off?`<div class="row off"><b>${esc(label)}</b><span>${esc(right)}</span></div>`:`<a class="row" href="${href}"><b>${esc(label)}</b><span>${esc(right)}</span><span class="chev" aria-hidden="true">›</span></a>`;

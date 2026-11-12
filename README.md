@@ -1,6 +1,6 @@
 # Nhật ký hiện trường An Phú — V2.0 (bản viết mới)
 
-Khối 1 · Nền chung (2.0.0-nen1).
+Khối 1 · Nền chung (2.0.0-nen2).
 
 - Dùng trên điện thoại: https://lelenhbac1974hn-web.github.io/nhat-ky-hien-truong/ (Safari → Chia sẻ → Thêm vào MH chính).
 - Chạy thử trên máy: `node serve.cjs`, mở http://127.0.0.1:4173/. Không cần cài đặt hay build.
@@ -22,6 +22,12 @@ Nhật ký hiện trường V2.0
 ├─ Báo cáo ngày (khối 4)
 └─ Báo cáo ảnh (khối 5)
 ```
+
+## Nguyên tắc giao diện
+1. Màn của 4 tab chính (Hôm nay, Hồ sơ, Kho ảnh, Dự án) chỉ là danh sách để chọn, không có ô nhập.
+2. Nhập dữ liệu chỉ ở trang nhập: đầu trang có nút quay lại và tiêu đề, cuối trang là thanh thao tác cố định (Hủy / Lưu).
+3. Nút và ô nhập một kiểu cho toàn ứng dụng: nút chính nền xanh navy, nút phụ nền trắng viền mảnh, bo góc 10 px, cao 44 px; ô nhập có nhãn ở trên, gợi ý ở dưới.
+4. Thao tác xóa nằm trong mục "Vùng nguy hiểm" và luôn hỏi xác nhận.
 
 ## Sơ đồ lưu trữ
 Một kho duy nhất trong trình duyệt: IndexedDB `anphu_nkht`. Không dùng localStorage.
@@ -51,4 +57,4 @@ Gói sao lưu `.zip`: `du-lieu.json` + `anh/` + `anh-nho/` + `pdf/`.
 | sw.js | Chạy khi mất mạng |
 
 ## Kiểm thử
-`kiem-thu/kiem_thu_nen_chung.py` (Python + Playwright): 13 luồng.
+`kiem-thu/kiem_thu_nen_chung.py` (Python + Playwright): 14 luồng.

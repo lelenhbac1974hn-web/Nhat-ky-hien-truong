@@ -22,9 +22,11 @@ const P={home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 
 export const bi=(ic,label)=>`${icon(ic,18)}<span>${esc(label)}</span>`;
 export const icon=(n,s=24)=>`<svg aria-hidden="true" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
 let toastTimer;
-export function toast(msg,ms=2800){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.hidden=true,ms)}
+/* Thông báo nổi: nền trắng, có biểu tượng; tự chọn loại theo nội dung (Đã… = xong, Đang… = đang chạy, còn lại = lưu ý). */
+export function toast(msg,ms=2800){const t=$('#toast');const k=/^Đã /.test(msg)?'ok':/^Đang /.test(msg)?'run':'warn';
+  t.className='k-'+k;t.innerHTML=icon(k==='ok'?'check':k==='run'?'restore':'info',18)+`<span>${esc(msg)}</span>`;t.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.hidden=true,ms)}
 /* Hộp thoại đáy màn hình. Trả về phần tử; đóng bằng closeSheet(). */
-export function sheet(html){closeSheet();const w=document.createElement('div');w.id='sheet';w.className='sheet-wrap';w.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${html}</div>`;
+export function sheet(html){closeSheet();$('#toast').hidden=true;const w=document.createElement('div');w.id='sheet';w.className='sheet-wrap';w.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${html}</div>`;
   w.addEventListener('click',e=>{if(e.target===w)closeSheet()});document.body.appendChild(w);const f=w.querySelector('button,input,textarea');if(f)f.focus();return w.firstElementChild}
 export function closeSheet(){const s=$('#sheet');if(s)s.remove()}
 /* Hỏi xác nhận; typed: bắt gõ đúng một cụm chữ mới cho tiếp tục. */
@@ -45,6 +47,7 @@ export function subPage(V,{back,title,sub='',body,actions=''}){document.body.cla
 export const field=(label,id,value='',o={})=>`<label class="fld">${esc(label)}${o.area?`<textarea id="${id}" ${o.ph?`placeholder="${esc(o.ph)}"`:''}>${esc(value)}</textarea>`:`<input id="${id}" value="${esc(value)}" ${o.ph?`placeholder="${esc(o.ph)}"`:''} ${o.type?`type="${o.type}"`:''} autocomplete="off">`}${o.hint?`<small>${esc(o.hint)}</small>`:''}</label>`;
 /* Menu dạng lưới ô (theo kiểu menu app cũ của anh Bắc): ô trắng, biểu tượng trong khối màu nhạt, chữ dưới.
    it: {href,label,sub,ic,tone:'g'|'a'|'b'|'p'|'n',off} */
-export const menuGrid=items=>`<div class="mgrid">${items.map(it=>{const inner=`<span class="mic t-${it.tone||'n'}">${icon(it.ic||'doc',30)}</span><b>${esc(it.label)}</b>${it.sub?`<small>${esc(it.sub)}</small>`:''}`;
+export const menuGrid=items=>`<div class="mgrid">${items.map(it=>{const inner=`<span class="mic t-${it.tone||'n'}">${icon(it.ic||'doc',26)}</span><b>${esc(it.label)}</b>${it.off||it.sub?`<small>${esc(it.off?'Sắp có':it.sub)}</small>`:''}`;
   return it.off?`<div class="mtile off" aria-disabled="true">${inner}</div>`:`<a class="mtile" href="${it.href}">${inner}</a>`}).join('')}</div>`;
-export const menuRow=(href,label,right='',o={})=>o.off?`<div class="row off"><b>${esc(label)}</b><span>${esc(right)}</span></div>`:`<a class="row" href="${href}"><b>${esc(label)}</b><span>${esc(right)}</span><span class="chev" aria-hidden="true">›</span></a>`;
+export const rowIc=(ic,tone='n')=>ic?`<span class="ric t-${tone}">${icon(ic,18)}</span>`:'';
+export const menuRow=(href,label,right='',o={})=>o.off?`<div class="row off">${rowIc(o.ic,o.tone)}<b>${esc(label)}</b><span>${esc(right)}</span></div>`:`<a class="row" href="${href}">${rowIc(o.ic,o.tone)}<b>${esc(label)}</b><span>${esc(right)}</span><span class="chev" aria-hidden="true">›</span></a>`;

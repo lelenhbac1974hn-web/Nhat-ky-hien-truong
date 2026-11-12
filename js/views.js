@@ -1,7 +1,7 @@
 /* Các màn hình nền chung: Hôm nay, Hồ sơ, Kho ảnh, Camera, Dự án. */
 import * as db from './db.js';import * as photos from './photos.js';import * as zip from './zip.js';
 import {S,createProject,saveProject,saveSettings,watchGps,gpsText,load} from './state.js';
-import {bi,$,esc,icon,toast,sheet,closeSheet,confirmSheet,saveFile,dayKey,fDate,fTime,fSize,p2,subPage,field,menuRow,menuGrid} from './ui.js';
+import {bi,$,esc,icon,toast,sheet,closeSheet,confirmSheet,saveFile,dayKey,fDate,fTime,fSize,p2,subPage,field,menuRow,menuGrid,rowIc} from './ui.js';
 export const KIND={coc:['Nghiệm thu cọc','g'],khac:['Nghiệm thu','g'],hang:['Nhận hàng','a'],ngay:['Báo cáo ngày','b'],anh:['Báo cáo ảnh','n']};
 const WD=['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
 const top=(small,h1,extra='')=>`<div class="top"><small>${esc(small)}</small><h1>${esc(h1)}</h1>${extra}</div>`;
@@ -15,10 +15,11 @@ export async function today(V){const d=new Date();
   const place=S.project.place||'Chưa ghi địa danh';
   V.innerHTML=top(`${WD[d.getDay()]} ${p2(d.getDate())}/${p2(d.getMonth()+1)} · ${S.project.name}`,'Việc hôm nay',`<a class="lnk" href="#project-info">${esc(place)} · <span id="gpsLine">${esc(gpsText(S.gps))}</span></a>`)+`<div class="body">
    <div class="sec">Đang làm dở</div>${drafts.length?drafts.slice(0,6).map(taskRow).join(''):'<p class="mut">Không có hồ sơ nào đang làm dở.</p>'}
-   ${hasDaily?'':`<div class="sec">Cần lập</div><div class="task"><i style="background:var(--b)"></i><div><span class="tag b">Báo cáo ngày</span><b>Báo cáo ${p2(d.getDate())}/${p2(d.getMonth()+1)}</b><span>Chưa lập</span></div></div>`}
+   ${hasDaily?'':`<div class="sec">Cần lập</div><div class="task">${rowIc('cal','b')}<div><span class="tag b">Báo cáo ngày</span><b>Báo cáo ${p2(d.getDate())}/${p2(d.getMonth()+1)}</b><span>Chưa lập</span></div></div>`}
    <div class="sec">Lập mới</div>${menuGrid([{label:'Nghiệm thu cọc',sub:'Khối 2',ic:'pile',tone:'g',off:1},{label:'Nghiệm thu công việc khác',sub:'Khối 2',ic:'work',tone:'g',off:1},{label:'Nhận hàng',sub:'Khối 3',ic:'truck',tone:'a',off:1},{label:'Báo cáo ngày',sub:'Khối 4',ic:'cal',tone:'b',off:1},{label:'Báo cáo ảnh',sub:'Khối 5',ic:'album',tone:'b',off:1}])}</div>`;
   const g=()=>{const e=$('#gpsLine');if(e)e.textContent=gpsText(S.gps)};addEventListener('ap-gps',g,{once:true})}
-const taskRow=r=>{const[k,c]=KIND[r.kind]||['Hồ sơ','n'];return`<a class="task" href="#records"><i style="background:var(--${c})"></i><div><span class="tag ${c}">${k}</span><b>${esc(r.title||'Chưa đặt tên')}</b><span>${esc(r.note||'Nháp')} · ${fDate(r.updatedAt)}</span></div></a>`};
+const KIND_IC={coc:'pile',khac:'work',hang:'truck',ngay:'cal',anh:'album'};
+const taskRow=r=>{const[k,c]=KIND[r.kind]||['Hồ sơ','n'];return`<a class="task" href="#records">${rowIc(KIND_IC[r.kind]||'doc',c)}<div><span class="tag ${c}">${k}</span><b>${esc(r.title||'Chưa đặt tên')}</b><span>${esc(r.note||'Nháp')} · ${fDate(r.updatedAt)}</span></div></a>`};
 
 /* ---------- Hồ sơ ---------- */
 export async function recordsView(V){if(!S.project){V.innerHTML=top('','Hồ sơ')+needProject();return}
@@ -95,8 +96,8 @@ export function projectMe(V){
   $('#fOk').onclick=async()=>{await saveSettings({reporter:$('#fRep').value.trim(),company:$('#fCo').value.trim()});toast('Đã lưu');location.hash='#project'}}
 export async function backupPage(V){const back=S.project?'#project':'#project',u=await db.usage(),nPh=(await photos.list()).length,nRec=(await records()).length,last=await db.get('meta','lastBackupAt');
   subPage(V,{back,title:'Sao lưu và khôi phục',body:`<div class="card"><p>${nPh} ảnh · ${nRec} hồ sơ${u?' · đã dùng '+fSize(u.used):''}</p><p class="${u&&u.persisted?'ok':'warn'}">${u&&u.persisted?'Trình duyệt đã cam kết không tự xóa dữ liệu của ứng dụng.':'Trình duyệt chưa cam kết giữ dữ liệu. Hãy sao lưu thường xuyên.'}</p><p class="mut">${last?'Sao lưu gần nhất: '+fTime(last)+' · '+fDate(last):'Chưa sao lưu lần nào.'}</p></div>
-   <div class="grp">${S.project?`<button class="row" id="bkOut" style="width:100%;border:0;text-align:left;font:inherit;cursor:pointer"><b>Sao lưu toàn bộ (.zip)</b><span class="chev">›</span></button>`:''}<button class="row" id="bkIn" style="width:100%;border:0;text-align:left;font:inherit;cursor:pointer"><b>Khôi phục từ gói sao lưu</b><span class="chev">›</span></button></div><input type="file" id="bkFile" accept=".zip" hidden>
-   ${S.project?`<div class="sec">Vùng nguy hiểm</div><div class="grp"><button class="row" id="wipe" style="width:100%;border:0;text-align:left;font:inherit;cursor:pointer;color:var(--r)"><b>Xóa toàn bộ dữ liệu trên máy</b></button></div>`:''}`});
+   <div class="grp">${S.project?`<button class="row" id="bkOut" style="width:100%;border:0;text-align:left;font:inherit;cursor:pointer">${rowIc('save','p')}<b>Sao lưu toàn bộ (.zip)</b><span class="chev">›</span></button>`:''}<button class="row" id="bkIn" style="width:100%;border:0;text-align:left;font:inherit;cursor:pointer">${rowIc('restore','p')}<b>Khôi phục từ gói sao lưu</b><span class="chev">›</span></button></div><input type="file" id="bkFile" accept=".zip" hidden>
+   ${S.project?`<div class="sec">Vùng nguy hiểm</div><div class="grp"><button class="row" id="wipe" style="width:100%;border:0;text-align:left;font:inherit;cursor:pointer;color:var(--r)">${rowIc('trash','r')}<b>Xóa toàn bộ dữ liệu trên máy</b></button></div>`:''}`});
   if($('#bkOut'))$('#bkOut').onclick=async()=>{toast('Đang đóng gói sao lưu…',60000);try{const b=await backup();await db.put('meta',Date.now(),'lastBackupAt');await saveFile(`SaoLuu_${slugName(S.project.name)}_${dayKey()}.zip`,b);backupPage(V)}catch(e){toast('Chưa sao lưu được: '+e.message)}};
   if($('#wipe'))$('#wipe').onclick=async()=>{if(!await confirmSheet({title:'Xóa toàn bộ dữ liệu?',text:'Dự án, ảnh và hồ sơ trên máy này bị xóa hẳn. Hãy sao lưu trước.',ok:'Xóa toàn bộ',danger:true,typed:'XOA'}))return;stopCamera();try{await db.wipe();location.hash='#project';location.reload()}catch(e){toast(e.message)}};
   wireRestore(V)}

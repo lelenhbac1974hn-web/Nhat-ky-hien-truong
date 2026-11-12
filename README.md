@@ -1,6 +1,6 @@
 # Nhật ký hiện trường An Phú — V2.0 (bản viết mới)
 
-Khối 1 · Nền chung (2.0.0-nen2).
+Khối 1 · Nền chung (2.0.0-nen3).
 
 - Dùng trên điện thoại: https://lelenhbac1974hn-web.github.io/nhat-ky-hien-truong/ (Safari → Chia sẻ → Thêm vào MH chính).
 - Chạy thử trên máy: `node serve.cjs`, mở http://127.0.0.1:4173/. Không cần cài đặt hay build.
@@ -26,8 +26,9 @@ Nhật ký hiện trường V2.0
 ## Nguyên tắc giao diện
 1. Màn của 4 tab chính (Hôm nay, Hồ sơ, Kho ảnh, Dự án) chỉ là danh sách để chọn, không có ô nhập.
 2. Nhập dữ liệu chỉ ở trang nhập: đầu trang có nút quay lại và tiêu đề, cuối trang là thanh thao tác cố định (Hủy / Lưu).
-3. Nút và ô nhập một kiểu cho toàn ứng dụng: nút chính nền xanh navy, nút phụ nền trắng viền mảnh, bo góc 10 px, cao 44 px; ô nhập có nhãn ở trên, gợi ý ở dưới.
-4. Thao tác xóa nằm trong mục "Vùng nguy hiểm" và luôn hỏi xác nhận.
+3. Menu dạng lưới 3 ô: ô trắng bo góc, biểu tượng trong khối màu nhạt 56 px, chữ bên dưới (theo menu app cũ). Màu khối theo phân hệ: xanh lá nghiệm thu, vàng nâu hàng hóa, xanh dương báo cáo, tím dữ liệu.
+4. Nút luôn có biểu tượng + chữ, nền trong suốt hòa vào nền trang, không khối đặc, không viền; chạm chỉ hiện lớp tô nhạt. Chữ navy là thao tác chính, chữ đỏ là xóa. Ô nhập cao 44 px, nhãn ở trên, gợi ý ở dưới.
+5. Thao tác xóa nằm trong mục "Vùng nguy hiểm" và luôn hỏi xác nhận.
 
 ## Sơ đồ lưu trữ
 Một kho duy nhất trong trình duyệt: IndexedDB `anphu_nkht`. Không dùng localStorage.

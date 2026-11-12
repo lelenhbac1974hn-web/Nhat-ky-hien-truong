@@ -1,6 +1,6 @@
 /* Khởi động và điều hướng. Mỗi màn hình là một hàm nhận phần tử #view. */
 import {load,S} from './state.js';import * as views from './views.js';import {$,icon,toast} from './ui.js';
-window.AP_VERSION='2.0.0-nen2';
+window.AP_VERSION='2.0.0-nen3';
 const ROUTES={today:views.today,records:views.recordsView,photos:views.photosView,project:views.project,camera:views.camera,'project-new':views.projectNew,'project-info':views.projectInfo,'project-me':views.projectMe,backup:views.backupPage,'photo-edit':views.photoEdit};
 const TAB_OF={'project-new':'project','project-info':'project','project-me':'project',backup:'project','photo-edit':'photos'};
 const TABS=[['today','home','Hôm nay'],['records','doc','Hồ sơ'],null,['photos','img','Kho ảnh'],['project','prj','Dự án']];
